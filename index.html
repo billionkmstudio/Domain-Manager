@@ -12,21 +12,94 @@
             min-height: 100vh;
             padding: 20px;
         }
+        
+        /* Login Page Styles */
+        .login-container {
+            max-width: 450px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-container h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .login-container p {
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .google-login-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .google-login-btn:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        .google-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* Main App Styles */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
+            display: none;
         }
+        .container.show { display: block; }
+        
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header-left h1 { font-size: 2.5em; margin-bottom: 5px; }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .logout-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+        
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -43,6 +116,7 @@
         }
         .stat-card h3 { color: #666; font-size: 0.9em; margin-bottom: 10px; }
         .stat-card .value { font-size: 2em; font-weight: bold; color: #667eea; }
+        
         .form-section {
             padding: 30px;
             border-bottom: 2px solid #f0f0f0;
@@ -70,6 +144,7 @@
             outline: none;
             border-color: #667eea;
         }
+        
         .btn {
             padding: 12px 30px;
             border: none;
@@ -110,6 +185,7 @@
             font-size: 0.9em;
             margin-right: 8px;
         }
+        
         .domains-section { padding: 30px; }
         .domains-section h2 { margin-bottom: 20px; color: #333; }
         .filter-section {
@@ -128,41 +204,39 @@
             transition: all 0.3s;
         }
         .filter-btn.active { background: #667eea; color: white; }
+        
         .domain-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            overflow-x: auto;
-            display: block;
-        }
-        .domain-table thead, .domain-table tbody {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
         }
         .domain-table th {
             background: #f8f9fa;
-            padding: 15px;
+            padding: 15px 10px;
             text-align: left;
             color: #333;
             font-weight: 600;
             border-bottom: 2px solid #dee2e6;
         }
         .domain-table td {
-            padding: 15px;
+            padding: 15px 10px;
             border-bottom: 1px solid #dee2e6;
+            vertical-align: middle;
         }
         .domain-table tr:hover { background: #f8f9fa; }
+        
         .status-badge {
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.85em;
             font-weight: 600;
             display: inline-block;
+            white-space: nowrap;
         }
         .status-active { background: #d4edda; color: #155724; }
         .status-warning { background: #fff3cd; color: #856404; }
         .status-danger { background: #f8d7da; color: #721c24; }
+        
         .loading { text-align: center; padding: 40px; color: #666; }
         .spinner {
             border: 4px solid #f3f3f3;
@@ -173,47 +247,67 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
+        
+        .message {
             padding: 15px;
             border-radius: 8px;
             margin: 20px;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
             border: 1px solid #f5c6cb;
         }
         .success-message {
             background: #d4edda;
             color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px;
             border: 1px solid #c3e6cb;
         }
-        .info-message {
-            background: #d1ecf1;
-            color: #0c5460;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px;
-            border: 1px solid #bee5eb;
-        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
         @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 15px; }
             .header h1 { font-size: 1.8em; }
             .form-grid { grid-template-columns: 1fr; }
-            .domain-table { font-size: 0.9em; }
+            .domain-table { font-size: 0.85em; }
             .domain-table th, .domain-table td { padding: 10px 5px; }
         }
     </style>
 </head>
-<body>
-    <div class="container">
+<body oncontextmenu="return false;" onkeydown="return disableDevTools(event);">
+    
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <h1>🌐</h1>
+        <h1>Domain 管理系統</h1>
+        <p>請使用 Google 帳號登入</p>
+        <button class="google-login-btn" onclick="signInWithGoogle()">
+            <svg class="google-icon" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            使用 Google 登入
+        </button>
+    </div>
+
+    <!-- Main App -->
+    <div class="container" id="mainApp">
         <div class="header">
-            <h1>🌐 Domain 管理系統</h1>
-            <p>輕鬆管理你的所有域名資產</p>
+            <div class="header-left">
+                <h1>🌐 Domain 管理系統</h1>
+                <p>輕鬆管理你的所有域名資產</p>
+            </div>
+            <div class="user-info">
+                <img id="userAvatar" class="user-avatar" src="" alt="User">
+                <span id="userName"></span>
+                <button class="logout-btn" onclick="signOut()">登出</button>
+            </div>
         </div>
 
         <div id="connectionStatus"></div>
@@ -246,7 +340,7 @@
                 </div>
                 <div class="form-group">
                     <label for="purchaseDate">購買日期 *</label>
-                    <input type="date" id="purchaseDate" required>
+                    <input type="date" id="purchaseDate" onchange="calculateExpiryDate()" required>
                 </div>
                 <div class="form-group">
                     <label for="expiryDate">到期日 *</label>
@@ -259,6 +353,10 @@
                 <div class="form-group">
                     <label for="registrar">註冊商</label>
                     <input type="text" id="registrar" placeholder="Namecheap, GoDaddy...">
+                </div>
+                <div class="form-group">
+                    <label for="registrarAccount">註冊賬戶</label>
+                    <input type="email" id="registrarAccount" placeholder="your@email.com">
                 </div>
                 <div class="form-group">
                     <label for="autoRenew">自動續期</label>
@@ -296,14 +394,14 @@
             <table class="domain-table" id="domainTable" style="display: none;">
                 <thead>
                     <tr>
-                        <th style="width: 25%;">Domain</th>
-                        <th style="width: 12%;">購買日期</th>
-                        <th style="width: 12%;">到期日</th>
+                        <th style="width: 20%;">Domain</th>
+                        <th style="width: 11%;">購買日期</th>
+                        <th style="width: 11%;">到期日</th>
                         <th style="width: 10%;">剩餘天數</th>
-                        <th style="width: 10%;">費用</th>
+                        <th style="width: 9%;">費用</th>
                         <th style="width: 12%;">註冊商</th>
                         <th style="width: 10%;">狀態</th>
-                        <th style="width: 9%;">操作</th>
+                        <th style="width: 17%;">操作</th>
                     </tr>
                 </thead>
                 <tbody id="domainList">
@@ -314,7 +412,8 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, push, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut as firebaseSignOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase, ref, push, onValue, remove, update, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyCioo2odMnJas8tgGLhjDM2VqqFPzNK5OY",
@@ -327,26 +426,106 @@
             measurementId: "G-1DDCGCXFTS"
         };
 
-        let app, database;
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+
+        let currentUser = null;
         let editingId = null;
         let currentFilter = 'all';
         let allDomains = [];
 
-        // Initialize Firebase
-        try {
-            app = initializeApp(firebaseConfig);
-            database = getDatabase(app);
-            showMessage('✅ Firebase 連接成功！正在讀取數據...', 'success');
-            setupDataListener();
-        } catch (error) {
-            showMessage('❌ Firebase 初始化錯誤: ' + error.message + '. 請檢查 databaseURL 是否正確。', 'error');
-            console.error('Firebase init error:', error);
+        // Disable Dev Tools
+        window.disableDevTools = function(e) {
+            if (e.keyCode === 123 || // F12
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+                (e.metaKey && e.altKey && (e.keyCode === 73 || e.keyCode === 74))) { // Cmd+Option+I/J
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        // Auto-calculate expiry date (1 year from purchase)
+        window.calculateExpiryDate = function() {
+            const purchaseDate = document.getElementById('purchaseDate').value;
+            if (purchaseDate) {
+                const purchase = new Date(purchaseDate);
+                purchase.setFullYear(purchase.getFullYear() + 1);
+                document.getElementById('expiryDate').value = purchase.toISOString().split('T')[0];
+            }
+        };
+
+        // Authentication
+        window.signInWithGoogle = async function() {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                currentUser = result.user;
+                showMessage('✅ 登入成功！歡迎 ' + currentUser.displayName, 'success');
+            } catch (error) {
+                showMessage('❌ 登入失敗: ' + error.message, 'error');
+                console.error('Login error:', error);
+            }
+        };
+
+        window.signOut = async function() {
+            try {
+                await firebaseSignOut(auth);
+                showMessage('✅ 已登出', 'success');
+            } catch (error) {
+                showMessage('❌ 登出失敗: ' + error.message, 'error');
+            }
+        };
+
+        // Monitor auth state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainApp').classList.add('show');
+                document.getElementById('userName').textContent = user.displayName;
+                document.getElementById('userAvatar').src = user.photoURL;
+                
+                // Migrate old data if exists
+                migrateOldData();
+                setupDataListener();
+            } else {
+                currentUser = null;
+                document.getElementById('loginPage').style.display = 'block';
+                document.getElementById('mainApp').classList.remove('show');
+            }
+        });
+
+        // Migrate old public data to user's private data
+        async function migrateOldData() {
+            try {
+                const oldDataRef = ref(database, 'domains');
+                const userDataRef = ref(database, 'users/' + currentUser.uid + '/domains');
+                
+                const oldSnapshot = await get(oldDataRef);
+                const userSnapshot = await get(userDataRef);
+                
+                // Only migrate if user has no data but old data exists
+                if (oldSnapshot.exists() && !userSnapshot.exists()) {
+                    const oldData = oldSnapshot.val();
+                    const updates = {};
+                    
+                    Object.keys(oldData).forEach(key => {
+                        updates['users/' + currentUser.uid + '/domains/' + key] = oldData[key];
+                    });
+                    
+                    await update(ref(database), updates);
+                    showMessage('✅ 已成功遷移舊數據到你的帳戶！', 'success');
+                    console.log('✅ Data migrated successfully');
+                }
+            } catch (error) {
+                console.error('Migration error:', error);
+            }
         }
 
         function showMessage(message, type) {
             const statusDiv = document.getElementById('connectionStatus');
-            const className = type === 'success' ? 'success-message' : type === 'info' ? 'info-message' : 'error-message';
-            statusDiv.className = className;
+            statusDiv.className = type === 'success' ? 'message success-message' : 'message error-message';
             statusDiv.textContent = message;
             
             if (type === 'success') {
@@ -358,6 +537,11 @@
         }
 
         window.saveDomain = function() {
+            if (!currentUser) {
+                showMessage('❌ 請先登入！', 'error');
+                return;
+            }
+
             const saveBtn = document.getElementById('saveBtn');
             saveBtn.disabled = true;
             saveBtn.textContent = '儲存中...';
@@ -368,6 +552,7 @@
                 expiryDate: document.getElementById('expiryDate').value,
                 cost: parseFloat(document.getElementById('cost').value),
                 registrar: document.getElementById('registrar').value.trim(),
+                registrarAccount: document.getElementById('registrarAccount').value.trim(),
                 autoRenew: document.getElementById('autoRenew').value === 'true',
                 notes: document.getElementById('notes').value.trim(),
                 timestamp: new Date().toISOString()
@@ -380,10 +565,10 @@
                 return;
             }
 
-            console.log('Saving domain:', domain);
+            const userDomainsRef = ref(database, 'users/' + currentUser.uid + '/domains');
 
             if (editingId) {
-                update(ref(database, 'domains/' + editingId), domain)
+                update(ref(database, 'users/' + currentUser.uid + '/domains/' + editingId), domain)
                     .then(() => {
                         showMessage('✅ Domain 更新成功！', 'success');
                         resetForm();
@@ -397,13 +582,13 @@
                         saveBtn.textContent = '💾 儲存';
                     });
             } else {
-                push(ref(database, 'domains'), domain)
+                push(userDomainsRef, domain)
                     .then(() => {
                         showMessage('✅ Domain 新增成功！', 'success');
                         resetForm();
                     })
                     .catch(error => {
-                        showMessage('❌ 新增錯誤: ' + error.message + '. 請檢查 Firebase Rules 是否允許寫入。', 'error');
+                        showMessage('❌ 新增錯誤: ' + error.message, 'error');
                         console.error('Push error:', error);
                     })
                     .finally(() => {
@@ -424,6 +609,7 @@
             document.getElementById('expiryDate').value = domain.expiryDate;
             document.getElementById('cost').value = domain.cost;
             document.getElementById('registrar').value = domain.registrar || '';
+            document.getElementById('registrarAccount').value = domain.registrarAccount || '';
             document.getElementById('autoRenew').value = domain.autoRenew ? 'true' : 'false';
             document.getElementById('notes').value = domain.notes || '';
 
@@ -431,8 +617,10 @@
         };
 
         window.deleteDomain = function(id) {
+            if (!currentUser) return;
+            
             if (confirm('確定要刪除這個 Domain 嗎？')) {
-                remove(ref(database, 'domains/' + id))
+                remove(ref(database, 'users/' + currentUser.uid + '/domains/' + id))
                     .then(() => showMessage('✅ Domain 已刪除', 'success'))
                     .catch(error => {
                         showMessage('❌ 刪除錯誤: ' + error.message, 'error');
@@ -451,6 +639,7 @@
             document.getElementById('expiryDate').value = '';
             document.getElementById('cost').value = '';
             document.getElementById('registrar').value = '';
+            document.getElementById('registrarAccount').value = '';
             document.getElementById('autoRenew').value = 'true';
             document.getElementById('notes').value = '';
             
@@ -562,7 +751,11 @@
         }
 
         function setupDataListener() {
-            onValue(ref(database, 'domains'), (snapshot) => {
+            if (!currentUser) return;
+
+            const userDomainsRef = ref(database, 'users/' + currentUser.uid + '/domains');
+            
+            onValue(userDomainsRef, (snapshot) => {
                 console.log('✅ Data received from Firebase');
                 allDomains = [];
                 snapshot.forEach((childSnapshot) => {
@@ -580,7 +773,7 @@
                 renderDomains();
                 updateStats();
             }, (error) => {
-                showMessage('❌ 讀取資料錯誤: ' + error.message + '. 請檢查 Firebase Rules 是否允許讀取。', 'error');
+                showMessage('❌ 讀取資料錯誤: ' + error.message, 'error');
                 console.error('Database read error:', error);
                 document.getElementById('loading').style.display = 'none';
             });
